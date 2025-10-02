@@ -2,19 +2,21 @@
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between; /* 左右对齐 */
 }
 
-ul.navbar-nav {
+.navbar-left {
+  margin-right: auto; /* 左边贴左 */
+}
+
+.navbar-center {
   display: flex;
-  flex-grow: 1;
-  align-items: center;
+  justify-content: center;
+  flex-grow: 1;  /* 撑开居中 */
 }
 
-ul.navbar-nav li:first-child {
-  margin-right: auto;
-}
-
-ul.navbar-nav + div {
-  flex-shrink: 0;
-  margin-left: auto;
+.navbar-right {
+  margin-left: auto; /* 右边贴右 */
+  display: flex;
+  gap: 0.5rem; /* 按钮之间留间距 */
 }

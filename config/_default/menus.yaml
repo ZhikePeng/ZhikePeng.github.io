@@ -16,8 +16,8 @@ main:
   - name: Zhike Peng
     url: /
     weight: 10
-    params:
-      class: 'mr-auto'
+#    params:
+#      class: 'mr-auto'
   - name: Home
     url: /
     weight: 20

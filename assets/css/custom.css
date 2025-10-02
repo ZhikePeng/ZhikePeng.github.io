@@ -1,8 +1,23 @@
-.navbar-nav {
+/* Custom Navbar Layout */
+
+.navbar-collapse {
+  display: flex;
   width: 100%;
-  justify-content: center;
+  align-items: center;
+}
+
+.navbar-nav {
+  flex-grow: 1;
 
   .nav-item:first-child {
-    margin-right: auto;
+    margin-right: 1.5rem;
   }
+}
+
+.navbar-icons {
+  flex-shrink: 0;
+}
+
+.navbar-nav + .navbar-text, .navbar-nav + .nav-item {
+  margin-left: auto;
 }

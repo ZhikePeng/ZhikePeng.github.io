@@ -20,7 +20,7 @@ status:
 superuser: true
 
 # Role/position/tagline
-role: Undergraduate, Zhili College, Tsinghua University
+role: Undergraduate of Zhili College
 
 # Organizations/Affiliations to show in About widget
 organizations:

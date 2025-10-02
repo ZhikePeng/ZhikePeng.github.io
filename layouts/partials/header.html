@@ -1,12 +1,13 @@
-<nav class="navbar">
+<nav class="custom-navbar">
   <div class="navbar-left">
-    <a href="/" class="navbar-brand">YourName</a>
+    <a href="/" class="navbar-brand">Zhike Peng</a>
   </div>
+
   <div class="navbar-center">
-    {{ $currentPage := . }}
     <ul class="navbar-menu">
+      {{ $currentPage := . }}
       {{ range .Site.Menus.main }}
-        {{ if ne .Name "YourName" }} <!-- 排除名字 -->
+        {{ if or (eq .Name "Home") (eq .Name "Blog") }}
           <li>
             <a href="{{ .URL | relURL }}"
                class="{{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}active{{ end }}">

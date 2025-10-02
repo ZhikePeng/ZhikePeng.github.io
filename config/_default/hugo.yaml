@@ -29,6 +29,12 @@ cascade:
       navbar:
         enable: true
 
+########
+# custom
+########
+params:
+  customCSS: ["css/custom.css"]
+  
 ############################
 ## LANGUAGE
 ############################

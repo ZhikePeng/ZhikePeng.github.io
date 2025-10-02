@@ -1,0 +1,40 @@
+.custom-navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  position: relative;
+  padding: 0 20px;
+  z-index: 10;
+}
+
+.navbar-left {
+  position: absolute;
+  left: 20px;
+}
+
+.navbar-center {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.navbar-menu li a.active {
+  color: #007acc;
+}

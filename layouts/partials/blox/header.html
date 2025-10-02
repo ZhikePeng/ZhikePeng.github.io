@@ -1,0 +1,19 @@
+<nav class="navbar">
+  <!-- 左边：名字 -->
+  <div class="navbar-left">
+    {{ range where site.Menus.main "Weight" 10 }}
+      <a href="{{ .URL }}">{{ .Name }}</a>
+    {{ end }}
+  </div>
+
+  <!-- 中间：主菜单 -->
+  <div class="navbar-center">
+    {{ range where site.Menus.main "Weight" "ge" 20 }}
+      <a href="{{ .URL }}">{{ .Name }}</a>
+    {{ end }}
+  </div>
+
+  <!-- 右边：按钮区域（空，等你自己插入搜索/夜间模式等） -->
+  <div class="navbar-right">
+  </div>
+</nav>

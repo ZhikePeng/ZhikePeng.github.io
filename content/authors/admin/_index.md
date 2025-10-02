@@ -40,6 +40,8 @@ profiles:
     url: https://x.com/zhike2003
   - icon: brands/instagram
     url: https://www.instagram.com/ekihzz/
+  - icon: brands/github
+    url: https://github.com/ZhikePeng
 #  - icon: brands/linkedin
 #    url: https://www.linkedin.com/
   # Link to a PDF of your resume/CV - upload it to `static/uploads/resume.pdf`

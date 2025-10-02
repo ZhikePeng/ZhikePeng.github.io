@@ -1,23 +1,21 @@
 /* Custom Navbar Layout */
 
 .navbar-collapse {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex !important;
   width: 100%;
 }
 
 .navbar-nav {
   display: flex;
-  flex-direction: row;
   align-items: center;
+  flex-grow: 1;
 }
 
 .navbar-nav .nav-item:first-child {
-  margin-right: 1.5rem;
+  margin-right: auto;
 }
 
-.navbar-icons {
-  display: flex;
-  align-items: center;
+.navbar-nav + .navbar-text, .navbar-nav + .nav-item {
+  margin-left: auto;
+  flex-shrink: 0;
 }

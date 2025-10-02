@@ -15,7 +15,10 @@
 main:
   - name: Home
     url: /
-    weight: 20
+    weight: 10
   - name: Blogs
     url: blog/
+    weight: 20
+  - name: Uses
+    url: uses/
     weight: 30

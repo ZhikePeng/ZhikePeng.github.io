@@ -13,12 +13,9 @@
 #     weight: 30
 
 main:
-  - name: Zhike Peng
-#    url: /
-    weight: 10
   - name: Home
     url: /
     weight: 20
-  - name: Blog
+  - name: Blogs
     url: blog/
     weight: 30

@@ -1,12 +1,20 @@
-.navbar-collapse {
-  border: 2px solid red !important;
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
-.navbar-nav {
-  border: 2px solid blue !important;
-  padding: 5px;
+ul.navbar-nav {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
 }
 
-.navbar-nav + .navbar-text, .navbar-icons {
-  border: 2px solid green !important;
+ul.navbar-nav li:first-child {
+  margin-right: auto;
+}
+
+ul.navbar-nav + div {
+  flex-shrink: 0;
+  margin-left: auto;
 }

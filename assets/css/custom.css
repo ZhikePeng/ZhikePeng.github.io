@@ -1,26 +1,12 @@
 .navbar-collapse {
-  display: flex !important;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  border: 2px solid red !important;
 }
 
 .navbar-nav {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
+  border: 2px solid blue !important;
+  padding: 5px;
 }
 
-.navbar-nav .nav-item:first-child {
-  margin-right: auto;
-}
-
-.navbar-icons {
-  margin-left: auto;
-  flex-shrink: 0;
-}
-
-.navbar-nav + .navbar-text, .navbar-nav + .nav-item {
-  margin-left: auto;
-  flex-shrink: 0;
+.navbar-nav + .navbar-text, .navbar-icons {
+  border: 2px solid green !important;
 }

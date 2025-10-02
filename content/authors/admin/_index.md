@@ -34,7 +34,7 @@ bio: My research interests include distributed robotics, mobile computing and pr
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
 profiles:
   - icon: at-symbol
-    url: 'zhike2003@gmail.com'
+    url: 'mailto:zhike2003@gmail.com'
     label: E-mail Me
   - icon: brands/x
     url: https://x.com/zhike2003

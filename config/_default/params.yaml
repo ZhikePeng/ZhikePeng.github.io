@@ -32,6 +32,8 @@ header:
     enable: true
     show_search: true
     show_theme_chooser: true
+    logo:
+      text: "Zhike Peng"
 
 # Site footer
 footer:

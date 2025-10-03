@@ -1,19 +1,67 @@
-<nav class="navbar">
-  <!-- 左边：名字 -->
-  <div class="navbar-left">
-    {{ range where site.Menus.main "Weight" 10 }}
-      <a href="{{ .URL }}">{{ .Name }}</a>
-    {{ end }}
-  </div>
+<header id="site-header" class="header">
+  <nav class="navbar px-3 flex justify-between items-center">
+    
+    <!-- 左边：Zhike Peng -->
+    <div class="order-0 h-full">
+      {{ range where site.Menus.main "Weight" 10 }}
+        <a class="navbar-brand text-lg font-bold" href="{{ .URL }}" title="{{ .Name }}">
+          {{ .Name }}
+        </a>
+      {{ end }}
+    </div>
 
-  <!-- 中间：菜单 -->
-  <div class="navbar-center">
-    {{ range where site.Menus.main "Weight" "ge" 20 }}
-      <a href="{{ .URL }}">{{ .Name }}</a>
-    {{ end }}
-  </div>
+    <!-- 中间：菜单 -->
+    <ul
+      id="nav-menu"
+      class="navbar-nav hidden lg:flex space-x-6 justify-center flex-grow text-center">
+      {{ $currentPage := . }}
+      {{ range where site.Menus.main "Weight" "ge" 20 }}
+        {{ $menuURL := .URL | absLangURL }}
+        {{ $pageURL := $currentPage.Permalink | absLangURL }}
+        {{ $active := eq $menuURL $pageURL }}
+        <li class="nav-item">
+          <a
+            class="nav-link {{ if $active }}active{{ end }}"
+            href="{{ .URL | relLangURL }}">
+            {{ .Name }}
+          </a>
+        </li>
+      {{ end }}
+    </ul>
 
-  <!-- 右边：按钮区域（空） -->
-  <div class="navbar-right">
-  </div>
-</nav>
+    <!-- 右边：按钮（保持原始逻辑） -->
+    <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
+
+      {{ $show_search := site.Params.header.navbar.show_search | default false }}
+      {{ with $show_search }}
+      <button
+        aria-label="toggle search"
+        class="text-black hover:text-primary px-3 text-xl dark:text-white"
+        data-search-toggle>
+        🔍
+      </button>
+      {{ end }}
+
+      {{ $show_theme_chooser := site.Params.header.navbar.show_theme_chooser | default true }}
+      {{ if $show_theme_chooser }}
+      <button class="theme-toggle px-3" title="appearance">🌙</button>
+      {{ end }}
+
+      {{ $show_translations := site.Params.header.navbar.show_translations | default true }}
+      {{ if .IsTranslated | and $show_translations }}
+      <div class="pl-1 mr-5">
+        {{ partial "components/language-chooser.html" (dict "page" .) }}
+      </div>
+      {{ end }}
+
+      {{ if site.Params.header.navbar.button.enable }}
+      <a
+        href="{{ site.Params.header.navbar.button.url | relLangURL }}"
+        class="inline-block rounded border px-4 py-1.5 text-sm font-semibold transition
+        border-black hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black hidden lg:inline-block">
+        {{ site.Params.header.navbar.button.text }}
+      </a>
+      {{ end }}
+    </div>
+  </nav>
+</header>

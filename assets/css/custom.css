@@ -1,22 +1,10 @@
-.navbar {
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.navbar-left {
-  margin-right: auto;
-}
-
-.navbar-center {
-  flex-grow: 1;
+.navbar-nav {
   display: flex;
   justify-content: center;
-  gap: 1rem; /* 菜单间距 */
+  gap: 1.5rem; /* 菜单间距 */
 }
 
-.navbar-right {
-  margin-left: auto;
-  display: flex;
-  gap: 0.5rem; /* 右侧按钮间距 */
+.navbar-brand {
+  font-size: 1.25rem;
+  font-weight: bold;
 }

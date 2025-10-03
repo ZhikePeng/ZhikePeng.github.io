@@ -1,157 +1,64 @@
 <header id="site-header" class="header">
-  <nav class="navbar px-3 flex justify-start">
-    <div class="order-0 h-full">
-      <!-- Brand -->
-      <a class="navbar-brand site-title-link" href="{{ site.Home.RelPermalink }}" title="{{ site.Title }}">
-        {{- $logo_filename := site.Params.header.navbar.logo.filename -}}
-        {{ with $logo_filename }}
-          {{- $logo:= resources.Get (path.Join "media" $logo_filename) -}}
-          {{ with $logo }}
-            {{ $logoExt := path.Ext . }}
-            {{ if eq $logoExt `.svg` }}
-              {{- $logo.Content | safeHTML -}}
-            {{else}}
-              {{ $logo_img := ($logo.Process "Resize x36 webp") }}
-              <img
-                fetchpriority="high"
-                decoding="async"
-                class=""
-                width="{{ $logo_img.Width }}"
-                height="{{ $logo_img.Height }}"
-                src="{{ $logo_img.RelPermalink }}"
-                alt="{{ site.Title }}" />
-            {{end}}
-          {{ else }}
-            {{ warnf "Logo `%s` not found in `assets/media/` folder" $logo_filename }}
-          {{end}}
-        {{ end }}
-        {{ with site.Params.header.navbar.logo.text }}{{.}}{{end}}
-      </a>
-    </div>
-    <!-- Mobile menu -->
-    <input id="nav-toggle" type="checkbox" class="hidden" />
-    <label
-      for="nav-toggle"
-      class="order-3 cursor-pointer flex items-center lg:hidden text-dark dark:text-white lg:order-1">
-      <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
-        <title>Open Menu</title>
-        <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
-      </svg>
-      <svg id="hide-button" class="h-6 fill-current hidden" viewBox="0 0 20 20">
-        <title>Close Menu</title>
-        <polygon
-          points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
-          transform="rotate(45 10 10)"></polygon>
-      </svg>
-    </label>
-    <!-- /Mobile menu -->
+  <nav class="navbar px-4 flex items-center justify-between">
 
-    <!-- Main menu -->
-    {{ $align_menu := site.Params.header.navbar.align | default "center" }}
+    <!-- 左边：站点名字 -->
+    <div class="order-0 h-full flex items-center">
+      <a class="navbar-brand text-2xl font-extrabold mr-6" href="{{ site.Home.RelPermalink }}" title="{{ site.Title }}">
+        {{ with site.Params.header.navbar.logo.text }}{{.}}{{end }}
+      </a>
+
+      <!-- 移动端汉堡按钮 -->
+      <button
+        class="navbar-toggler ml-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-black hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary lg:hidden"
+        type="button"
+        aria-label="Toggle navigation"
+        aria-controls="nav-menu"
+        aria-expanded="false"
+        data-collapse-toggle="nav-menu">
+        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 中间：主菜单 -->
     <ul
       id="nav-menu"
-      class="navbar-nav order-3 hidden lg:flex w-full pb-6 lg:order-1 lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8 justify-start
-      {{ if in (slice "l" "left") $align_menu }}mr-auto ml-6{{ else if (in (slice "r" "right") $align_menu) }}ml-auto mr-6{{end}}">
+      class="navbar-nav hidden lg:flex space-x-6 flex-grow justify-center">
       {{ $currentPage := . }}
-      {{ range site.Menus.main }}
-      {{ $menuURL := .URL | absLangURL }}
-      {{ $pageURL:= $currentPage.Permalink | absLangURL }}
-      {{ $active := eq $menuURL $pageURL }}
-      {{ if .HasChildren }}
-      <li class="nav-item nav-dropdown group relative">
-            <span
-              role="button"
-              tabindex="0"
-              aria-haspopup="true"
-              aria-expanded="false"
-              class="nav-link cursor-pointer select-none {{ range .Children }}
-                {{ $childURL := .URL | absLangURL }}
-                {{ $active := eq $childURL $pageURL }}
-                {{ if $active }}active{{ end }}
-              {{ end }} inline-flex items-center">
-              {{ .Name }}
-              <svg class="h-4 w-4 fill-current inline-block" viewBox="0 0 20 20">
-                <path
-                  d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-              </svg>
-            </span>
-        <ul
-          class="nav-dropdown-list lg:group-hover:visible lg:group-hover:opacity-100">
-          {{ range .Children }}
-          {{ $childURL := .URL | absLangURL }}
-          {{ $active := eq $childURL $pageURL }}
-          {{ $url := "" }}
-          {{- if findRE `^#` .URL -}}
-            {{- if not $.IsHome -}}
-              {{- $url = site.Home.RelPermalink -}}
-            {{- end }}
-            {{- $url = .URL -}}
-          {{- else -}}
-            {{- $url = .URL | relLangURL -}}
-          {{- end -}}
-          <li class="nav-dropdown-item">
-            <a
-              class="nav-dropdown-link {{ if $active }}active{{- end -}}"
-              {{ if findRE `^http` .URL }}
-              target="_blank" rel="noopener"
-              {{ end }}
-              href="{{$url}}">
-              {{ .Name }}
-            </a>
-          </li>
-          {{ end }}
-        </ul>
-      </li>
-      {{ else }}
-      {{ $url := "" }}
-      {{- if findRE `^#` .URL -}}
-        {{- if not $.IsHome -}}
-          {{- $url = site.Home.RelPermalink -}}
-        {{- end }}
-        {{- $url = .URL -}}
-        {{- else -}}
-        {{- $url = .URL | relLangURL -}}
-      {{- end -}}
-      <li class="nav-item">
-        <a
-          class="nav-link {{ if $active }}active{{- end -}}"
-          {{ if findRE `^http` .URL }}
-          target="_blank" rel="noopener"
-          {{ end }}
-          href="{{$url}}"
-        >{{ .Name }}</a
-        >
-      </li>
-      {{ end }}
-      {{ end }}
-      {{ if site.Params.header.navbar.button.enable }}
-      <li class="mt-4 inline-block lg:hidden">
-        <a
-          class=""
-          href="{{ site.Params.header.navbar.button.url | relLangURL }}">
-          {{ site.Params.header.navbar.button.text }}
-        </a>
-      </li>
+      {{ range where site.Menus.main "Weight" "ge" 20 }}
+        {{ $menuURL := .URL | absLangURL }}
+        {{ $pageURL := $currentPage.Permalink | absLangURL }}
+        {{ $active := eq $menuURL $pageURL }}
+        <li class="nav-item">
+          <a
+            class="nav-link {{ if $active }}active{{ end }}"
+            href="{{ .URL | relLangURL }}">
+            {{ .Name }}
+          </a>
+        </li>
       {{ end }}
     </ul>
 
-    <div class="order-1 flex items-center md:order-2">
+    <!-- 右边：按钮区（保留原样式） -->
+    <div class="order-1 flex items-center md:order-2 lg:ml-0">
 
-      {{/* Show site search? */}}
+      {{/* 搜索按钮 */}}
       {{ $show_search := site.Params.header.navbar.show_search | default false }}
       {{ with $show_search }}
       <button
         aria-label="toggle search"
-        class="text-black hover:text-primary  inline-block px-3 text-xl dark:text-white"
+        class="text-black hover:text-primary inline-block px-3 text-xl dark:text-white"
         data-search-toggle>
         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" fill="currentColor"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
       </button>
       {{ end }}
 
+      {{/* 夜间模式按钮 */}}
       {{ $show_theme_chooser := site.Params.header.navbar.show_theme_chooser | default true }}
       {{ if $show_theme_chooser }}
-      <div class="px-3 text-black hover:text-primary-700 dark:text-white dark:hover:text-primary-300
-            [&.active]:font-bold [&.active]:text-black/90 dark:[&.active]:text-white">
+      <div class="px-3">
         <button class="theme-toggle mt-1" accesskey="t" title="appearance">
           <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -175,15 +82,15 @@
       </div>
       {{ end }}
 
+      {{/* 多语言选择器 */}}
       {{ $show_translations := site.Params.header.navbar.show_translations | default true }}
       {{ if .IsTranslated | and $show_translations }}
-      <div class="pl-1 mr-5 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200
-            [&.active]:font-bold [&.active]:text-black/90 dark:[&.active]:text-white">
+      <div class="pl-1 mr-5">
         {{- partial "components/language-chooser.html" (dict "page" .) -}}
       </div>
       {{ end }}
 
-      <!-- CTA button -->
+      <!-- CTA 按钮 -->
       {{ if site.Params.header.navbar.button.enable }}
       <a
         href="{{ site.Params.header.navbar.button.url | relLangURL }}"
@@ -197,7 +104,3 @@
     </div>
   </nav>
 </header>
-
-{{ if $show_search }}
-  {{- partial "components/search-modal.html" . -}}
-{{ end }}

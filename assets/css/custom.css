@@ -1,10 +1,7 @@
-.navbar-nav {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem; /* 菜单间距 */
-}
-
-.navbar-brand {
-  font-size: 1.25rem;
-  font-weight: bold;
+/* 调整站点名字（logo text）的样式 */
+.site-title-link {
+  font-size: 1.5rem;   /* 相当于 Tailwind 的 text-2xl */
+  font-weight: 800;    /* 更粗 */
+  margin-right: 2rem;  /* 和菜单项保持间距 */
+  line-height: 1.2;
 }

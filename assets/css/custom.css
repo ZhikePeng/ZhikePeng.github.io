@@ -9,8 +9,11 @@
 .navbar-nav {
   display: flex;
   justify-content: center;
-  font-weight: 700;
+  font-weight: 600;
   gap: 1.3rem;
+}
+.navbar-nav {
+  font-weight: 600;       /* semi-bold */
 }
 
 /* 移动端菜单默认跟随 HugoBlox 原样式 */

@@ -17,3 +17,15 @@
 }
 
 /* 移动端菜单默认跟随 HugoBlox 原样式 */
+
+.blog-title {
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-weight: 600;
+}
+
+/* 日期与标题之间保持整齐间距 */
+@media (min-width: 640px) {
+  .blog-item {
+    align-items: baseline;
+  }
+}

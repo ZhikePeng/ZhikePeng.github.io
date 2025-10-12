@@ -1,15 +1,31 @@
 {{ define "main" }}
-<section class="container mx-auto px-4 py-10">
-  <h1 class="text-3xl font-bold mb-8">{{ .Title }}</h1>
-  <ul class="space-y-2">
+<section class="container mx-auto px-6 py-10 max-w-4xl">
+  <h1 class="text-3xl font-bold mb-10">Blog Posts</h1>
+
+  <div class="space-y-8">
     {{ range .Pages.ByDate.Reverse }}
-      <li>
-        <a href="{{ .RelPermalink }}" class="text-lg text-primary hover:underline">
-          {{ .Title }}
-        </a>
-        <span class="text-sm text-gray-500 ml-2">{{ .Date.Format "2006-01-02" }}</span>
-      </li>
+      <div class="flex flex-col sm:flex-row sm:items-start sm:space-x-6">
+        <!-- 日期 -->
+        <div class="w-32 flex-shrink-0 text-gray-600 font-semibold mb-2 sm:mb-0">
+          {{ .Date.Format "Jan 2, 2006" }}
+        </div>
+
+        <!-- 内容 -->
+        <div class="flex-1">
+          <a href="{{ .RelPermalink }}" class="text-lg font-semibold hover:text-primary transition">
+            {{ .Title }}
+          </a>
+
+          {{ with .Params.description }}
+            <p class="text-gray-600 text-sm mt-1 leading-relaxed">{{ . }}</p>
+          {{ else }}
+            {{ with .Summary }}
+              <p class="text-gray-600 text-sm mt-1 leading-relaxed">{{ . | plainify }}</p>
+            {{ end }}
+          {{ end }}
+        </div>
+      </div>
     {{ end }}
-  </ul>
+  </div>
 </section>
 {{ end }}

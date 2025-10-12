@@ -1,0 +1,15 @@
+{{ define "main" }}
+<section class="container mx-auto px-4 py-10">
+  <h1 class="text-3xl font-bold mb-8">{{ .Title }}</h1>
+  <ul class="space-y-2">
+    {{ range .Pages.ByDate.Reverse }}
+      <li>
+        <a href="{{ .RelPermalink }}" class="text-lg text-primary hover:underline">
+          {{ .Title }}
+        </a>
+        <span class="text-sm text-gray-500 ml-2">{{ .Date.Format "2006-01-02" }}</span>
+      </li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}

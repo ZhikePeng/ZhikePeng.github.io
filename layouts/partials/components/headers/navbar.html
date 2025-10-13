@@ -26,16 +26,14 @@
     <div class="order-1 flex items-center space-x-4 md:order-2 lg:ml-0">
 
       <!-- Home / Blog 菜单 -->
-      <ul class="navbar-nav hidden lg:flex space-x-6">
+      <ul class="navbar-nav hidden lg:flex">
         {{ $currentPage := . }}
         {{ range where site.Menus.main "Weight" "ge" 20 }}
           {{ $menuURL := .URL | absLangURL }}
           {{ $pageURL := $currentPage.Permalink | absLangURL }}
           {{ $active := eq $menuURL $pageURL }}
           <li class="nav-item">
-            <a
-              class="nav-link {{ if $active }}active{{ end }}"
-              href="{{ .URL | relLangURL }}">
+            <a class="nav-link {{ if $active }}active{{ end }}" href="{{ .URL | relLangURL }}">
               {{ .Name }}
             </a>
           </li>

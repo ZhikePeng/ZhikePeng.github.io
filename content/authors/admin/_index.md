@@ -28,7 +28,7 @@ organizations:
     url: https://www.tsinghua.edu.cn/
 
 # Short bio (displayed in user profile at end of posts)
-bio: My research interests include distributed robotics, mobile computing and programmable matter.
+bio: My research interests lie at the intersection of theoretical computer science and artificial intelligence.
 
 # Social Networking
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
@@ -59,6 +59,4 @@ highlight_name: true
 website: ""
 ---
 
-Chien Shiung Wu is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include
-distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops
-self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+I am a senior undergraduate student at Tsinghua University’s Zhili College, and I will soon pursue a direct Ph.D. under the supervision of Professor Jing Chen in the Department of Computer Science at Tsinghua University. My research interests are broad and interdisciplinary, including graph theory, game theory, blockchain, as well as deep learning, reinforcement learning theory, and world models.

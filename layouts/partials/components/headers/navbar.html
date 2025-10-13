@@ -22,27 +22,25 @@
       </button>
     </div>
 
-    <!-- 中间：主菜单 -->
-    <ul
-      id="nav-menu"
-      class="navbar-nav hidden lg:flex space-x-6 flex-grow justify-center">
-      {{ $currentPage := . }}
-      {{ range where site.Menus.main "Weight" "ge" 20 }}
-        {{ $menuURL := .URL | absLangURL }}
-        {{ $pageURL := $currentPage.Permalink | absLangURL }}
-        {{ $active := eq $menuURL $pageURL }}
-        <li class="nav-item">
-          <a
-            class="nav-link {{ if $active }}active{{ end }}"
-            href="{{ .URL | relLangURL }}">
-            {{ .Name }}
-          </a>
-        </li>
-      {{ end }}
-    </ul>
+    <!-- 右边：按钮 + Home / Blog -->
+    <div class="order-1 flex items-center space-x-4 md:order-2 lg:ml-0">
 
-    <!-- 右边：按钮区（保留原样式） -->
-    <div class="order-1 flex items-center md:order-2 lg:ml-0">
+      <!-- Home / Blog 菜单 -->
+      <ul class="navbar-nav hidden lg:flex space-x-6">
+        {{ $currentPage := . }}
+        {{ range where site.Menus.main "Weight" "ge" 20 }}
+          {{ $menuURL := .URL | absLangURL }}
+          {{ $pageURL := $currentPage.Permalink | absLangURL }}
+          {{ $active := eq $menuURL $pageURL }}
+          <li class="nav-item">
+            <a
+              class="nav-link {{ if $active }}active{{ end }}"
+              href="{{ .URL | relLangURL }}">
+              {{ .Name }}
+            </a>
+          </li>
+        {{ end }}
+      </ul>
 
       {{/* 搜索按钮 */}}
       {{ $show_search := site.Params.header.navbar.show_search | default false }}

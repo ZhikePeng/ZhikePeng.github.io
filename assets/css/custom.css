@@ -1,23 +1,23 @@
-/* 左边名字稍大，比菜单略大 */
+/* 左边名字稍大并加粗 */
 .navbar-brand {
-  font-size: 1.125rem; /* text-lg */
-  font-weight: 700;    /* bold */
-  margin-right: 1rem;  /* 与右边菜单保持间距 */
-  font-family: 'Inter', sans-serif; /* 可换成你喜欢的字体 */
-}
-
-/* 右边菜单（Home / Blog） */
-.navbar-nav {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;         /* Home 和 Blog 间距稍小 */
-  font-weight: 600;     /* semi-bold */
+  font-size: 1.125rem;   /* text-lg */
+  font-weight: 700;      /* bold */
+  margin-right: 1rem;    /* 与右边菜单保持间距 */
   font-family: 'Inter', sans-serif; /* 可换字体 */
 }
 
-/* 保持按钮和菜单之间间距 */
-.navbar-nav + div {
-  margin-left: 1rem;
+/* 右边菜单（Home / Blog）加粗并调整间距 */
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;          /* Home 和 Blog 间距稍小 */
+  font-weight: 700;      /* bold */
+  font-family: 'Inter', sans-serif; /* 可换字体 */
+}
+
+/* 按钮之间间距 */
+.navbar-nav + div > * {
+  margin-left: 0.5rem;   /* 缩小按钮之间间距 */
 }
 
 /* 移动端菜单默认跟随 HugoBlox 原样式 */

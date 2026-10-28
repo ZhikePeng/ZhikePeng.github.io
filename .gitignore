@@ -75,3 +75,7 @@ Desktop.ini
 
 *.log
 npm-debug.log*
+
+# Local visual checks and PDF renderings
+tmp/
+__pycache__/

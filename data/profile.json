@@ -1,0 +1,78 @@
+{
+  "name": "Zhike Peng",
+  "email": "zhike2003@gmail.com",
+  "website": "https://zhikepeng.github.io",
+  "github": "https://github.com/ZhikePeng",
+  "updated": "October 2026",
+  "role": "Ph.D. Student in Computer Science",
+  "affiliation": "Tsinghua University",
+  "location": "Beijing, China",
+  "bio": "I am a Ph.D. student in the Department of Computer Science and Technology at Tsinghua University, advised by Professor Jing Chen. I received my bachelor's degree in Information and Computing Science from Tsinghua's Zhili College in 2026.",
+  "interests": "My interests span theoretical computer science and artificial intelligence, with a particular focus on mechanism design and blockchain. I am also interested in graph theory, reinforcement learning theory, and world models.",
+  "researchAreas": [
+    {"title": "Algorithms & incentives", "keywords": "Mechanism design · Game theory · Blockchain", "text": "Designing mechanisms for automated market makers, with attention to incentives and economic efficiency."},
+    {"title": "Learning & intelligence", "keywords": "Reinforcement learning · LLMs · World models", "text": "Exploring reinforcement learning for language-model tool use, alongside broader interests in learning theory and world models."},
+    {"title": "Visual understanding", "keywords": "3D scenes · Representation learning", "text": "Studying automatic camera selection, scene representations, and the reconstruction of images from brain signals."}
+  ],
+  "education": [
+    {"institution": "Tsinghua University", "unit": "Department of Computer Science and Technology", "degree": "Ph.D. in Computer Science and Technology", "dates": "Sep 2026 - Present", "detail": "Advisor: Professor Jing Chen."},
+    {"institution": "Tsinghua University", "unit": "Zhili College", "degree": "Bachelor's degree in Information and Computing Science", "dates": "Sep 2022 - Jun 2026", "detail": "GPA: 3.86. Comprehensive Excellence Scholarship (2024, 2025); Social Work Scholarship (2023)."}
+  ],
+  "publications": [
+    {
+      "id": "peng2026uniform",
+      "title": "Uniform-Price Mechanism Design for Automated Market Makers",
+      "authors": ["Zhike Peng"],
+      "venue": "IJTCS-FAW 2026",
+      "status": "Accepted",
+      "year": "2026",
+      "summary": "A uniform-price batch auction for automated market makers, studying the trade-off between incentive guarantees and trading volume.",
+      "links": [{"label": "arXiv", "url": "https://arxiv.org/abs/2610.23547"}, {"label": "PDF", "url": "https://arxiv.org/pdf/2610.23547"}],
+      "bibtex": "@inproceedings{peng2026uniform,\n  author = {Peng, Zhike},\n  title = {Uniform-Price Mechanism Design for Automated Market Makers},\n  booktitle = {International Joint Conference on Theoretical Computer Science -- Frontier of Algorithmic Wisdom (IJTCS-FAW)},\n  year = {2026},\n  note = {Accepted; full version available as arXiv:2610.23547},\n  url = {https://arxiv.org/abs/2610.23547}\n}"
+    },
+    {
+      "id": "zhang2024scenephotographer",
+      "title": "ScenePhotographer: Object-Oriented Photography for Residential Scenes",
+      "authors": ["Shao-Kui Zhang", "Hanxi Zhu", "Xuebin Chen", "Jinghuan Chen", "Zhike Peng", "Ziyang Chen", "Yong-Liang Yang", "Song-Hai Zhang"],
+      "venue": "ACM Multimedia 2024",
+      "status": "Oral presentation",
+      "year": "2024",
+      "summary": "An object-oriented framework that groups scene objects, proposes camera views, and selects informative compositions for residential scenes.",
+      "links": [{"label": "DOI", "url": "https://doi.org/10.1145/3664647.3680942"}, {"label": "PDF", "url": "https://cg.cs.tsinghua.edu.cn/Shao-Kui/Papers/ScenePhotographer.pdf"}, {"label": "Code", "url": "https://github.com/Shao-Kui/3DScenePlatform"}],
+      "bibtex": "@inproceedings{zhang2024scenephotographer,\n  author = {Zhang, Shao-Kui and Zhu, Hanxi and Chen, Xuebin and Chen, Jinghuan and Peng, Zhike and Chen, Ziyang and Yang, Yong-Liang and Zhang, Song-Hai},\n  title = {ScenePhotographer: Object-Oriented Photography for Residential Scenes},\n  booktitle = {Proceedings of the 32nd ACM International Conference on Multimedia},\n  year = {2024},\n  pages = {7843--7851},\n  doi = {10.1145/3664647.3680942},\n  url = {https://doi.org/10.1145/3664647.3680942}\n}"
+    }
+  ],
+  "research": [
+    {"title": "Uniform-price mechanism design for automated market makers", "organization": "Tsinghua University · Jing Chen's group", "role": "Undergraduate thesis", "dates": "2025 - 2026", "description": "Designed uniform-price mechanisms for automated market makers and analyzed their economic properties and social efficiency."},
+    {"title": "Disentangling visual scene representations", "organization": "Tsinghua University · Jun Zhu's group", "role": "Research course project", "dates": "2025", "description": "Combined 3D VAEs and Slot Attention to investigate representation learning, feature disentanglement, and semantic segmentation in 3D scenes."},
+    {"title": "Image reconstruction from EEG signals", "organization": "Tsinghua Information Retrieval Lab", "role": "Research intern", "dates": "2024 - 2025", "description": "Explored reconstructing visual images from EEG signals using VQGAN and GPT."},
+    {"title": "Automatic viewpoint selection in 3D scenes", "organization": "Tsinghua University · Song-Hai Zhang's group", "role": "Student Research Training (SRT) project", "dates": "2023 - 2024", "description": "Studied automatic camera selection in virtual 3D scenes using object relationships, scene information, and composition criteria. Received the SRT Outstanding Project Second Prize."}
+  ],
+  "industry": [
+    {"title": "Machine Learning", "organization": "Huawei · HiSilicon Turing", "dates": "2025 - 2026", "description": "Worked on fundamental AI algorithms and AI product development, including algorithm design, experimental validation, and product exploration."},
+    {"title": "Large Language Model Research", "organization": "Zhipu AI", "dates": "2025", "description": "Investigated reinforcement learning to improve multi-turn tool use in large language models, with experiments on training and evaluation."}
+  ],
+  "honors": [
+    {"year": "2025", "title": "Third Place", "detail": "Tsinghua–NTHU–HKUST Programming Contest"},
+    {"year": "2024", "title": "Gold Medal · 9th Place", "detail": "ICPC Shanghai Regional"},
+    {"year": "2024", "title": "Outstanding Project · Second Prize", "detail": "Tsinghua Student Research Training (SRT) Program"},
+    {"year": "2023", "title": "Champion", "detail": "CCPC Qinhuangdao Regional"},
+    {"year": "2023", "title": "Gold Medal · 14th Place", "detail": "ICPC Xi'an Regional"},
+    {"year": "2023", "title": "First Prize", "detail": "Tsinghua–NTHU–HKUST Programming Contest"},
+    {"year": "2023", "title": "Beijing First Prize", "detail": "China Undergraduate Mathematical Contest in Modeling"},
+    {"year": "2022", "title": "Gold Medal · 4th Place", "detail": "CCPC Guangzhou Regional"},
+    {"year": "2022", "title": "Gold Medal · 16th Place", "detail": "ICPC Hangzhou Regional"},
+    {"year": "2022", "title": "Silver Medal · 12th Place", "detail": "ICPC Hong Kong Regional"},
+    {"year": "2021", "title": "Silver Medal · 51st Place", "detail": "CCF National Olympiad in Informatics (NOI)"}
+  ],
+  "service": [
+    {"title": "Student Counselor", "organization": "Wuqiong College, Tsinghua University", "dates": "During Ph.D. studies", "description": "Support student education and day-to-day student affairs."},
+    {"title": "Vice President, Zhili College TMS", "organization": "Tsinghua University", "dates": "During undergraduate studies", "description": "Selected for the 12th cohort of the Lin Feng Program. Served as a TMS staff member, head of its theory department, and vice president; also served as a class arts representative and party-study group leader."}
+  ],
+  "outreach": [
+    {"date": "Aug 2023", "location": "Jining, Shandong", "text": "Summer volunteer teaching and academic exchange with local secondary-school students."},
+    {"date": "Jan 2024", "location": "Shibadong Village, Hunan", "text": "Field research on targeted poverty alleviation and rural revitalization."},
+    {"date": "Aug 2024", "location": "Shanxi", "text": "Visits to energy and manufacturing enterprises to study industrial transformation and upgrading."},
+    {"date": "Aug 2024", "location": "Beipiao, Liaoning", "text": "Field research on the revitalization and industrial upgrading of an established industrial city."}
+  ]
+}

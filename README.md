@@ -1,38 +1,42 @@
-# [Creator's Blog: Hugo Theme](https://github.com/HugoBlox/theme-blog)
+# Zhike Peng — Academic Homepage
 
-[![Screenshot](./.github/preview.png)](https://hugoblox.com/templates/)
+An English academic homepage and curriculum vitae for Zhike Peng at Tsinghua University. Designed around paper tones, cobalt accents, editorial typography, and the original calligraphic mark. Includes responsive layouts, persistent light/dark appearance, publication links, BibTeX downloads, and a two-page English PDF CV.
 
-The **Creator's Blog** Hugo Theme empowers you to easily create your own _personal blog_ or _build a business around your content_.
+## Preview and build
 
-️**Trusted by 250,000+ researchers, educators, and students.** Highly customizable via the integrated **no-code, block-based website builder**, making every site truly personalized ⭐⭐⭐⭐⭐
+Requires Node.js 20 or newer. No package installation is needed.
 
-[![Get Started](https://img.shields.io/badge/-Get%20started-ff4655?style=for-the-badge)](https://hugoblox.com/templates/)
-[![Discord](https://img.shields.io/discord/722225264733716590?style=for-the-badge)](https://discord.com/channels/722225264733716590/742892432458252370/742895548159492138)  
-[![Twitter Follow](https://img.shields.io/twitter/follow/GetResearchDev?label=Follow%20on%20Twitter)](https://x.com/BuildLore)
+```sh
+npm run dev
+# http://127.0.0.1:4321
 
-Easily write technical content with plain text Markdown, LaTeX math, diagrams, RMarkdown, or Jupyter, and import publications from BibTeX.
+npm run build
+# Static output: public/
+```
 
-[Check out the latest demo](https://hugo-blog-theme.netlify.app/) of what you'll get in less than 10 minutes, or [view the showcase](https://hugoblox.com/creators/).
+The preview serves the current build. After editing content or styles, run `npm run build` and reload the browser.
 
-The integrated [**Hugo Blox**](https://hugoblox.com) website builder and CMS makes it easy to create a beautiful website for free. Edit your site in the CMS (or your favorite editor), generate it with [Hugo](https://github.com/gohugoio/hugo), and deploy with GitHub or Netlify. Customize anything on your site with widgets, light/dark themes, and language packs.
+## Update content
 
-- 👉 [**Get Started**](https://hugoblox.com/templates/)
-- 📚 [View the **documentation**](https://docs.hugoblox.com/)
-- 💬 [Chat with the **Hugo Blox Builder community**](https://discord.gg/z8wNYzb) or [**Hugo community**](https://discourse.gohugo.io)
-- ⬇️ **Automatically import citations from BibTeX** with the [Hugo Academic CLI](https://github.com/GetRD/academic-file-converter)
-- 🐦 Share your new site with the community: [@GetResearchDev](https://x.com/BuildLore) [@GeorgeCushen](https://twitter.com/GeorgeCushen) [#MadeWithHugoBlox](https://twitter.com/search?q=%23MadeWithHugoBlox&src=typed_query)
-- 🗳 [Take the survey and help us improve #OpenSource](https://forms.gle/NioD9VhUg7PNmdCAA)
-- 🚀 [Contribute improvements](https://github.com/HugoBlox/hugo-blox-builder/blob/main/CONTRIBUTING.md) or [suggest improvements](https://github.com/HugoBlox/hugo-blox-builder/issues)
-- ⬆️ **Updating?** View the [Update Guide](https://docs.hugoblox.com/) and [Release Notes](https://github.com/HugoBlox/hugo-blox-builder/releases)
+- `data/profile.json` is the shared source for the homepage, web CV, citations, and PDF CV.
+- `scripts/build.mjs` renders complete HTML, so content and navigation work without JavaScript.
+- `static/css/site.css` contains the responsive visual system and print styles.
+- `static/js/site.js` adds theme switching, mobile-menu conveniences, and citation copying.
+- `static/images/personal-mark.jpg` preserves the original profile mark.
 
-## We ask you, humbly, to support this open source movement
+To regenerate the PDF after editing the shared content, run Python with ReportLab installed:
 
-Today we ask you to defend the open source independence of the Hugo Blox Builder and themes 🐧
+```sh
+python3 scripts/generate_cv.py
+npm run build
+```
 
-We're an open source movement that depends on your support to stay online and thriving, but 99.9% of our creators don't give; they simply look the other way.
+The result is `static/uploads/resume.pdf`; its original URL remains stable. The web CV is at `/cv/`. Publication citations are generated at `/citations/`.
 
-### [❤️ Click here to become a GitHub Sponsor, unlocking awesome perks such as _exclusive academic templates and widgets_](https://hugoblox.com/sponsors/)
+The October 2026 update lists *Uniform-Price Mechanism Design for Automated Market Makers* as accepted at IJTCS-FAW 2026, with its [arXiv full version](https://arxiv.org/abs/2610.23547). The ScenePhotographer author list, DOI, and oral status follow the [authors' project repository](https://github.com/Shao-Kui/3DScenePlatform).
 
-## Demo credits
+## Publish
 
-- [Unsplash](https://unsplash.com/) images
+The existing GitHub Pages workflow builds and deploys `public/` on pushes to `main`. `netlify.toml` supports the same static build if needed. The PDF is checked into the repository, so publishing needs only Node.js.
+
+The previous Hugo Blox sources remain in `content/`, `layouts/`, `config/`, and `assets/` for reference; the new build does not use them. Old `/blog/`, `/uses/`, and `/authors/admin/` routes point visitors to the homepage. Template demo posts are not included in the published site. The original Chinese CV in the separate CV folder is unchanged.

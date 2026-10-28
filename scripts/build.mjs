@@ -1,10 +1,16 @@
-import { readFile, writeFile, mkdir, cp, mkdtemp, rename, rm, stat } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, cp, mkdtemp, rename, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { escapeHTML as esc, loadPosts, slugify } from './blog.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const profile = JSON.parse(await readFile(path.join(root, 'data/profile.json'), 'utf8'));
+const [siteStyles, siteScript] = await Promise.all([
+  readFile(path.join(root, 'assets/css/site.css'), 'utf8'),
+  readFile(path.join(root, 'static/js/site.js'), 'utf8'),
+]);
+const styleVersion = createHash('sha256').update(siteStyles).digest('hex').slice(0, 12);
 const posts = await loadPosts(path.join(root, 'content/blog'), { includeDrafts: process.argv.includes('--drafts') });
 const publishedPosts = posts.filter(post => !post.draft);
 const destination = path.join(root, 'public');
@@ -25,39 +31,53 @@ function head(title, route, { description = plainDescription, article = null, ma
     author: { '@type': 'Person', name: profile.name, url: `${siteURL}/about/` },
     description: article.description,
   } : {
-    '@context': 'https://schema.org', '@type': route === '/' ? 'Blog' : 'WebPage',
+    '@context': 'https://schema.org', '@type': route === '/blog/' ? 'Blog' : 'WebPage',
     name: title, url: siteURL + route, author: { '@type': 'Person', name: profile.name },
   };
   return `<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(description)}">
-<meta name="color-scheme" content="light dark"><meta name="theme-color" content="#faf9f6">
+<meta name="color-scheme" content="light dark"><meta name="theme-color" content="#f8f9f5">
 <link rel="canonical" href="${siteURL}${route}"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/rss+xml" title="Zhike Peng" href="/index.xml">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${siteURL}${route}"><meta property="og:type" content="${article ? 'article' : 'website'}">
 <meta property="og:image" content="${siteURL}/images/social-card.png">
 ${article ? `<meta property="article:published_time" content="${article.date}T00:00:00+08:00">` : ''}
-<link rel="stylesheet" href="/css/site.css">${math ? '<link rel="stylesheet" href="/vendor/katex/katex.min.css">' : ''}
+<style id="site-styles" data-version="${styleVersion}">${siteStyles}</style>${math ? '<link rel="stylesheet" href="/vendor/katex/katex.min.css">' : ''}
 <script>try{const t=localStorage.getItem('zp-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch{}</script>
-<script src="/js/site.js" defer></script><script type="application/ld+json">${jsonLD(structured)}</script>
+<script type="application/ld+json">${jsonLD(structured)}</script>
 </head><body><a class="skip-link" href="#main">Skip to content</a>`;
 }
 
 function header(current = '') {
   return `<header class="site-header"><a class="site-name" href="/">Zhike Peng</a>
-<nav aria-label="Main navigation">${[['writing', '/', 'Writing'], ['research', '/research/', 'Research'], ['about', '/about/', 'About']].map(([key, url, label]) => `<a href="${url}"${current === key ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</nav></header>`;
+<nav aria-label="Main navigation">${[['home', '/', 'Home'], ['blog', '/blog/', 'Blog'], ['research', '/research/', 'Research'], ['cv', '/cv/', 'CV']].map(([key, url, label]) => `<a href="${url}"${current === key ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</nav></header>`;
 }
+
+const contactLinks = [
+  { name: 'Email', url: `mailto:${profile.email}` },
+  { name: 'GitHub', url: profile.github },
+  ...(profile.socials || []),
+];
+const contactIcons = {
+  Email: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
+  GitHub: '<path fill="currentColor" stroke="none" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.07c-3.09.67-3.74-1.31-3.74-1.31-.5-1.29-1.24-1.63-1.24-1.63-1.02-.7.08-.69.08-.69 1.12.08 1.71 1.15 1.71 1.15.99 1.7 2.6 1.21 3.23.92.1-.72.39-1.21.71-1.49-2.46-.28-5.05-1.23-5.05-5.49 0-1.21.43-2.2 1.14-2.98-.11-.28-.49-1.41.11-2.94 0 0 .93-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.12-1.44 3.05-1.14 3.05-1.14.6 1.53.22 2.66.11 2.94.71.78 1.14 1.77 1.14 2.98 0 4.27-2.6 5.21-5.08 5.49.4.35.75 1.02.75 2.06v3.06c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z"/>',
+  X: '<path d="m5 4 14 16M19 4 5 20M3 4h4l14 16h-4Z"/>',
+  Instagram: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/>',
+};
+const socialIcons = () => contactLinks.map(item => `<a href="${esc(item.url)}" aria-label="${esc(item.name)}" title="${esc(item.name)}"><svg viewBox="0 0 24 24" aria-hidden="true">${contactIcons[item.name] || contactIcons.Email}</svg></a>`).join('');
 
 function footer() {
   return `<footer class="site-footer"><span>© ${new Date().getUTCFullYear()} Zhike Peng</span><div>
-<a href="/index.xml">RSS</a><a href="${profile.github}">GitHub</a><a href="mailto:${profile.email}">Email</a>
-<button class="theme-toggle" aria-label="Switch to dark theme" hidden>Dark</button></div></footer></body></html>`;
+${contactLinks.map(item => link(item.url, item.name)).join('')}<a href="/index.xml">RSS</a>
+<button class="theme-toggle" aria-label="Switch to dark theme" hidden>Dark</button></div></footer>
+<script id="site-script">${siteScript}</script></body></html>`;
 }
 
 function page(title, route, current, body, options = {}) {
-  return `${head(title, route, options)}${header(current)}<main id="main" class="${options.className || ''}">${body}</main>${footer()}`;
+  return `${head(title, route, options)}${header(current)}<main id="main" class="site-main ${options.className || ''}">${body}</main>${footer()}`;
 }
 
 function postList(items) {
@@ -72,13 +92,21 @@ function cvEntry(entry) {
 <p class="entry-meta">${esc(entry.organization)}${entry.role ? ` · ${esc(entry.role)}` : ''}</p><p>${esc(entry.description)}</p></article>`;
 }
 
-const home = page('Zhike Peng', '/', 'writing', `
-<section class="introduction" aria-label="Introduction"><p>I’m a Ph.D. student in computer science at Tsinghua University, advised by Professor Jing Chen.</p>
-<p>My interests are in theoretical computer science and artificial intelligence.</p>
-<a class="quiet-link" href="/about/">More about me <span aria-hidden="true">→</span></a></section>
-<section class="writing-section" aria-labelledby="writing-title"><div class="section-title"><h1 id="writing-title">Writing</h1>${posts.length > 8 ? '<a href="/blog/">All posts</a>' : ''}</div>${postList(posts.slice(0, 8))}</section>`);
+const home = page('Zhike Peng', '/', 'home', `
+<div class="home-layout"><aside class="profile" aria-label="Profile">
+<img class="profile-avatar" src="/images/personal-mark.jpg" alt="Zhike Peng's avatar" width="640" height="640" fetchpriority="high">
+<h1>Zhike Peng</h1><p class="profile-role">Ph.D. student</p><p class="profile-affiliation"><a href="https://www.tsinghua.edu.cn/">Tsinghua University</a></p>
+<p class="profile-location">Beijing, China</p><div class="social-links" aria-label="Contact and social profiles">${socialIcons()}</div>
+<a class="profile-cv" href="/uploads/resume.pdf">Curriculum vitae <span>(PDF)</span></a></aside>
+<div class="home-content"><section class="biography" id="about" aria-labelledby="about-title"><h2 id="about-title">About me</h2>
+<p>${esc(profile.bio)}</p><p>${esc(profile.interests)}</p>
+<p>I also serve as a student counselor at Wuqiong College, Tsinghua University.</p>
+<p class="biography-contact" id="contact"><a href="mailto:${profile.email}">${profile.email}</a></p></section>
+<section class="home-publications" id="publications" aria-labelledby="home-publications-title"><div class="section-title"><h2 id="home-publications-title">Selected publications</h2><a href="/research/">All publications</a></div>
+<ol>${profile.publications.map(pub => `<li><span class="home-pub-year">${pub.year}</span><div><h3>${link(pub.links[0].url, pub.title)}</h3><p>${esc(pub.venue)} · ${esc(pub.status)}</p></div></li>`).join('')}</ol></section>
+${posts.length ? `<section class="home-blog" aria-labelledby="home-blog-title"><div class="section-title"><h2 id="home-blog-title">From the blog</h2><a href="/blog/">All posts</a></div>${postList(posts.slice(0, 3))}</section>` : ''}</div></div>`, { className: 'home-page' });
 
-const archive = page('Writing — Zhike Peng', '/blog/', 'writing', `<header class="page-heading"><h1>Writing</h1></header>${posts.length ? [...new Set(posts.map(post => post.date.slice(0, 4)))].map(year => `<section class="archive-year"><h2>${year}</h2>${postList(posts.filter(post => post.date.startsWith(year)))}</section>`).join('') : postList([])}`);
+const archive = page('Blog — Zhike Peng', '/blog/', 'blog', `<header class="page-heading"><h1>Blog</h1></header>${posts.length ? [...new Set(posts.map(post => post.date.slice(0, 4)))].map(year => `<section class="archive-year"><h2>${year}</h2>${postList(posts.filter(post => post.date.startsWith(year)))}</section>`).join('') : postList([])}`);
 
 const research = page('Research — Zhike Peng', '/research/', 'research', `
 <header class="page-heading"><h1>Research</h1><p>Mechanism design, game theory, and artificial intelligence.</p></header>
@@ -89,14 +117,14 @@ const research = page('Research — Zhike Peng', '/research/', 'research', `
 <details class="citation"><summary>Citation</summary><pre><code>${esc(pub.bibtex)}</code></pre><button class="copy-citation" hidden>Copy BibTeX</button></details></li>`).join('')}</ol></section>
 <p class="closing-link"><a href="/cv/">Full curriculum vitae</a></p>`);
 
-const about = page('About — Zhike Peng', '/about/', 'about', `
+const about = page('About — Zhike Peng', '/about/', 'home', `
 <header class="page-heading"><h1>About</h1></header><div class="prose"><p>${esc(profile.bio)}</p><p>${esc(profile.interests)}</p>
 <p>I also support student affairs at Wuqiong College, Tsinghua University.</p></div>
 <div class="about-links" id="contact"><a href="/cv/">Curriculum vitae</a><a href="/uploads/resume.pdf">PDF</a><a href="mailto:${profile.email}">Email</a></div>
 <section class="about-section"><h2>Education</h2>${profile.education.map(entry => `<article class="about-entry"><div class="entry-heading"><h3>${esc(entry.institution)}</h3><span>${date(entry.dates)}</span></div><p>${esc(entry.degree)} · ${esc(entry.unit)}</p></article>`).join('')}</section>
 <section class="about-section"><h2>Industry</h2>${profile.industry.map(entry => `<article class="about-entry"><div class="entry-heading"><h3>${esc(entry.organization)}</h3><span>${date(entry.dates)}</span></div><p>${esc(entry.title)}</p></article>`).join('')}</section>`);
 
-const cv = page('Curriculum vitae — Zhike Peng', '/cv/', 'about', `
+const cv = page('Curriculum vitae — Zhike Peng', '/cv/', 'cv', `
 <header class="page-heading cv-heading"><h1>Curriculum vitae</h1><a href="/uploads/resume.pdf">Download PDF ↓</a></header>
 <div class="cv-identity"><h2>Zhike Peng</h2><p>${esc(profile.role)} · Tsinghua University</p><p><a href="mailto:${profile.email}">${profile.email}</a></p></div>
 <p class="cv-interests">${esc(profile.interests)}</p>
@@ -129,11 +157,11 @@ try {
       if (tagNames.has(key) && tagNames.get(key) !== tag) throw new Error(`Tags ${tagNames.get(key)} and ${tag} produce the same URL.`);
       tagNames.set(key, tag);
     }
-    const html = page(`${post.title} — Zhike Peng`, post.route, 'writing', `
-<a class="back-link" href="/">← Writing</a><article class="post"><header class="post-heading">
+    const html = page(`${post.title} — Zhike Peng`, post.route, 'blog', `
+<a class="back-link" href="/blog/">← Blog</a><article class="post"><header class="post-heading">
 <p class="post-date"><time datetime="${post.date}">${postDate(post.date)}</time><span>${post.minutes} min read</span>${post.draft ? '<span>Draft preview</span>' : ''}</p>
 <h1>${esc(post.title)}</h1>${post.tags.length ? `<p class="post-tags">${post.tags.map(tag => `<a href="/tags/${slugify(tag)}/">${esc(tag)}</a>`).join('')}</p>` : ''}</header>
-<div class="prose">${post.html}</div><footer class="post-footer"><a href="/">All writing</a><a href="mailto:${profile.email}?subject=${encodeURIComponent(post.title)}">Respond by email</a></footer></article>`,
+<div class="prose">${post.html}</div><footer class="post-footer"><a href="/blog/">All posts</a><a href="mailto:${profile.email}?subject=${encodeURIComponent(post.title)}">Respond by email</a></footer></article>`,
       { description: post.description || plainDescription, article: post, math: post.html.includes('class="katex'), className: 'article-page' });
     const postOutput = path.join(output, post.route.slice(1));
     if (post.assetsDirectory) await cp(post.assetsDirectory, postOutput, {
@@ -142,7 +170,7 @@ try {
     });
     await write(`${post.route.slice(1)}index.html`, html);
   }
-  for (const [slug, tag] of tagNames) await write(`tags/${slug}/index.html`, page(`${tag} — Zhike Peng`, `/tags/${slug}/`, 'writing', `<header class="page-heading"><p class="page-label">Topic</p><h1>${esc(tag)}</h1></header>${postList(posts.filter(post => post.tags.includes(tag)))}`));
+  for (const [slug, tag] of tagNames) await write(`tags/${slug}/index.html`, page(`${tag} — Zhike Peng`, `/tags/${slug}/`, 'blog', `<header class="page-heading"><p class="page-label">Topic</p><h1>${esc(tag)}</h1></header>${postList(posts.filter(post => post.tags.includes(tag)))}`));
   if (posts.some(post => post.html.includes('class="katex'))) {
     await mkdir(path.join(output, 'vendor/katex'), { recursive: true });
     await cp(path.join(root, 'node_modules/katex/dist/katex.min.css'), path.join(output, 'vendor/katex/katex.min.css'));

@@ -1,9 +1,7 @@
 (() => {
   const previousSections = {
     '#research': '/research/',
-    '#publications': '/research/#publications-title',
-    '#background': '/about/',
-    '#contact': '/about/#contact',
+    '#background': '/#about',
   };
   if (location.pathname === '/' && previousSections[location.hash]) {
     location.replace(previousSections[location.hash]);

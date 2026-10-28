@@ -1,6 +1,6 @@
 # Zhike Peng
 
-A personal blog with a compact introduction, an article archive, and separate Research, About, and CV pages. The site intentionally has no published posts yet. The old Hugo sample is a draft and is never published.
+A personal website with a Home introduction and original avatar, a separate Blog archive, and Research and CV pages. The palette follows the gray-green tones in the avatar, with a restrained layout and generous spacing. The site intentionally has no published posts yet. The old Hugo sample is a draft and is never published.
 
 ## Preview
 
@@ -36,16 +36,18 @@ Write the article below the frontmatter. Change `draft` to `false` when ready to
 
 Standard Markdown, fenced code, tables, images, inline math (`$...$`), and display math (`$$` on separate lines) are supported. Put figures and attachments beside a post's `index.md` and use relative paths. Heading links are generated automatically. Tags get their own archive pages. Articles are sorted newest first.
 
-The home page shows the latest eight articles. `/blog/` contains the complete archive, and `/index.xml` is the RSS feed. `/blog/index.xml` and the previous `/post/index.xml` feed URL also work. There is no publishing interface or database: commit the Markdown file to publish.
+Home introduces Zhike and shows selected publications. Once posts are published, it also shows the three latest articles. `/blog/` is the dedicated Blog archive, and `/index.xml` is the RSS feed. `/blog/index.xml` and the previous `/post/index.xml` feed URL also work. There is no publishing interface or database: commit the Markdown file to publish.
 
 ## Content and appearance
 
-- `data/profile.json`: biography, publications, experience, and the shared CV data.
+- `data/profile.json`: biography, publications, experience, social profiles, and the shared CV data.
 - `content/blog/`: article sources.
 - `scripts/blog.mjs`: Markdown, frontmatter, date, and draft handling.
 - `scripts/build.mjs`: page templates and static output.
-- `static/css/site.css`: typography, spacing, reading styles, dark mode, and print layout.
+- `assets/css/site.css`: the avatar-based palette, profile layout, typography, reading styles, dark mode, and print layout.
+- The build embeds the shared CSS and small enhancement script directly in each HTML page. This binds the layout to its content and prevents a newly deployed page from loading an incompatible cached stylesheet at a reused URL. Each embedded stylesheet includes a content hash for deployment verification.
 - `static/js/site.js`: optional appearance switching and citation copying.
+- The previous unversioned `static/css/site.css` is retained for compatibility with cached copies of the previous HTML. New pages carry their styles directly and do not request that legacy file.
 - `static/uploads/resume.pdf`: the two-page English CV, still available at its original URL.
 
 To regenerate the PDF after changing profile data, run `python3 scripts/generate_cv.py` with ReportLab installed, then build the site. The IJTCS-FAW 2026 acceptance is retained in the Research page and both CV formats. The original Chinese CV in the separate CV folder is unchanged.

@@ -53,6 +53,7 @@ test('real build emits article pages and feeds, copies assets, and removes unpub
   await Promise.all([
     cp(path.join(root, 'scripts'), path.join(dir, 'scripts'), { recursive: true }),
     cp(path.join(root, 'static'), path.join(dir, 'static'), { recursive: true }),
+    cp(path.join(root, 'assets'), path.join(dir, 'assets'), { recursive: true }),
     cp(path.join(root, 'data'), path.join(dir, 'data'), { recursive: true }),
     mkdir(path.join(dir, 'content/blog/article'), { recursive: true }),
     symlink(path.join(root, 'node_modules'), path.join(dir, 'node_modules'), 'dir'),
@@ -67,7 +68,14 @@ test('real build emits article pages and feeds, copies assets, and removes unpub
   const article = await readFile(path.join(output, 'blog/article/index.html'), 'utf8');
   const feed = await readFile(path.join(output, 'index.xml'), 'utf8');
   const sitemap = await readFile(path.join(output, 'sitemap.xml'), 'utf8');
+  const firstStyleVersion = home.match(/<style id="site-styles" data-version="([a-f0-9]+)">/)[1];
   assert.match(home, /A &amp; B/);
+  assert.match(home, /href="\/" aria-current="page">Home<\/a>/);
+  assert.match(home, /class="profile-avatar"/);
+  assert.match(home, /https:\/\/x.com\/zhike2003/);
+  assert.match(home, /https:\/\/www.instagram.com\/ekihzz\//);
+  assert.match(home, /\.home-layout\s*\{/);
+  assert.doesNotMatch(home, /href="\/css\/site.css"|src="\/js\/site.js"/);
   assert.doesNotMatch(home + feed + sitemap, /PRIVATE-DRAFT|\/private\//);
   assert.match(article, /<h1>A &amp; B<\/h1>/);
   assert.match(article, /vendor\/katex\/katex.min.css/);
@@ -75,9 +83,15 @@ test('real build emits article pages and feeds, copies assets, and removes unpub
   await access(path.join(output, 'blog/article/figure.svg'));
   await access(path.join(output, 'tags/theory/index.html'));
   await writeFile(source, post('A & B', '2026-01-01', 'draft: true\n'));
+  const styleFile = path.join(dir, 'assets/css/site.css');
+  await writeFile(styleFile, (await readFile(styleFile, 'utf8')) + '\n/* A revised design must travel with its HTML. */\n');
   await run(process.execPath, ['scripts/build.mjs'], { cwd: dir });
   await assert.rejects(access(path.join(output, 'blog/article/index.html')));
   await assert.rejects(access(path.join(output, 'tags/theory/index.html')));
   assert.doesNotMatch(await readFile(path.join(output, 'index.xml'), 'utf8'), /<item>/);
-  assert.match(await readFile(path.join(output, 'index.html'), 'utf8'), /No posts yet/);
+  const revisedHome = await readFile(path.join(output, 'index.html'), 'utf8');
+  const nextStyleVersion = revisedHome.match(/<style id="site-styles" data-version="([a-f0-9]+)">/)[1];
+  assert.notEqual(nextStyleVersion, firstStyleVersion);
+  assert.match(revisedHome, /A revised design must travel with its HTML/);
+  assert.match(await readFile(path.join(output, 'blog/index.html'), 'utf8'), /No posts yet/);
 });

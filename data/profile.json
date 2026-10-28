@@ -3,6 +3,10 @@
   "email": "zhike2003@gmail.com",
   "website": "https://zhikepeng.github.io",
   "github": "https://github.com/ZhikePeng",
+  "socials": [
+    {"name": "X", "url": "https://x.com/zhike2003"},
+    {"name": "Instagram", "url": "https://www.instagram.com/ekihzz/"}
+  ],
   "updated": "October 2026",
   "role": "Ph.D. Student in Computer Science",
   "affiliation": "Tsinghua University",

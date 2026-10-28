@@ -45,6 +45,7 @@ Home introduces Zhike and shows selected publications. Once posts are published,
 - `scripts/blog.mjs`: Markdown, frontmatter, date, and draft handling.
 - `scripts/build.mjs`: page templates and static output.
 - `assets/css/site.css`: the avatar-based palette, profile layout, typography, reading styles, dark mode, and print layout.
+- `static/fonts/`: self-hosted Newsreader (headings and names) and Source Sans 3 (body and navigation), including real italic faces and the original OFL licenses. Font filenames include package versions; regular faces are preloaded, while italics load only when used.
 - The build embeds the shared CSS and small enhancement script directly in each HTML page. This binds the layout to its content and prevents a newly deployed page from loading an incompatible cached stylesheet at a reused URL. Each embedded stylesheet includes a content hash for deployment verification.
 - `static/js/site.js`: optional appearance switching and citation copying.
 - The previous unversioned `static/css/site.css` is retained for compatibility with cached copies of the previous HTML. New pages carry their styles directly and do not request that legacy file.

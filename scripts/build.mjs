@@ -40,6 +40,8 @@ function head(title, route, { description = plainDescription, article = null, ma
 <title>${esc(title)}</title><meta name="description" content="${esc(description)}">
 <meta name="color-scheme" content="light dark"><meta name="theme-color" content="#f8f9f5">
 <link rel="canonical" href="${siteURL}${route}"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/newsreader-5.3.0-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/source-sans-3-5.3.1-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="alternate" type="application/rss+xml" title="Zhike Peng" href="/index.xml">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${siteURL}${route}"><meta property="og:type" content="${article ? 'article' : 'website'}">

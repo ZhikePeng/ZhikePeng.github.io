@@ -79,3 +79,4 @@ npm-debug.log*
 # Local visual checks and PDF renderings
 tmp/
 __pycache__/
+.site-build-*/
